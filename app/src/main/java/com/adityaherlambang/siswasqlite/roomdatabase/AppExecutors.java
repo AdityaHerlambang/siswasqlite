@@ -1,4 +1,4 @@
-package com.adityaherlambang.siswasqlite.database;
+package com.adityaherlambang.siswasqlite.roomdatabase;
 
 /*
  * Copyright (C) 2017 The Android Open Source Project

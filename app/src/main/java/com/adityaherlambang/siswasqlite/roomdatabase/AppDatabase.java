@@ -1,4 +1,4 @@
-package com.adityaherlambang.siswasqlite.database;
+package com.adityaherlambang.siswasqlite.roomdatabase;
 
 
 import androidx.room.Database;
@@ -13,7 +13,7 @@ import com.adityaherlambang.siswasqlite.model.Mahasiswa;
 public abstract class AppDatabase extends RoomDatabase {
     private static final String LOG_TAG = AppDatabase.class.getSimpleName();
     private static final Object LOCK = new Object();
-    private static final String DATABASE_NAME = "db_mahasiswa";
+    private static final String DATABASE_NAME = "db_akademik";
     private static AppDatabase sInstance;
 
     public static AppDatabase getInstance(Context context) {

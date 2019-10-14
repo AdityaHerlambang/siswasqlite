@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,66 +16,67 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.adityaherlambang.siswasqlite.EditActivity;
 import com.adityaherlambang.siswasqlite.MainActivity;
 import com.adityaherlambang.siswasqlite.R;
-import com.adityaherlambang.siswasqlite.database.AppDatabase;
-import com.adityaherlambang.siswasqlite.database.AppExecutors;
-import com.adityaherlambang.siswasqlite.model.Mahasiswa;
+import com.adityaherlambang.siswasqlite.helper.DatabaseHelper;
+import com.adityaherlambang.siswasqlite.roomdatabase.AppDatabase;
+import com.adityaherlambang.siswasqlite.roomdatabase.AppExecutors;
+import com.adityaherlambang.siswasqlite.model.Tugas;
 
 import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import mehdi.sakout.fancybuttons.FancyButton;
 
-public class MahasiswaAdapter extends RecyclerView.Adapter<MahasiswaAdapter.MyViewHolder> {
+public class TugasAdapter extends RecyclerView.Adapter<TugasAdapter.MyViewHolder> {
     private Context context;
-    private List<Mahasiswa> mMahasiswaList;
+    private List<Tugas> mTugasList;
+    DatabaseHelper databaseHelper;
 
-    public MahasiswaAdapter(Context context) {
+    public TugasAdapter(Context context) {
         this.context = context;
+        databaseHelper = new DatabaseHelper(context);
     }
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_mahasiswa, viewGroup, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_tugas, viewGroup, false);
         return new MyViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MahasiswaAdapter.MyViewHolder myViewHolder, int i) {
-        myViewHolder.mNama.setText(mMahasiswaList.get(i).getNama());
-        myViewHolder.mNim.setText(mMahasiswaList.get(i).getNim());
+    public void onBindViewHolder(@NonNull TugasAdapter.MyViewHolder myViewHolder, int i) {
+        myViewHolder.mNama.setText(mTugasList.get(i).getNama());
+        myViewHolder.mDeskripsi.setText(mTugasList.get(i).getDeskripsi());
 
-        Log.d("ADAPTER","ID = "+mMahasiswaList.get(i).getId());
+        Log.d("ADAPTER","ID = "+mTugasList.get(i).getId());
 
-        String jenisKelamin = "Perempuan";
-        if(mMahasiswaList.get(i).getJenisKelamin() == 1){
-            jenisKelamin = "Laki-laki";
+        String status = "Mudah";
+        if(mTugasList.get(i).getStatus() == 1){
+            status = "Sulit";
         }
-        myViewHolder.mJenisKelamin.setText(jenisKelamin);
-
+        myViewHolder.mStatus.setText(status);
     }
 
     @Override
     public int getItemCount() {
-        if (mMahasiswaList == null) {
+        if (mTugasList == null) {
             return 0;
         }
-        return mMahasiswaList.size();
+        return mTugasList.size();
 
     }
 
-    public void setTasks(List<Mahasiswa> mahasiswaList) {
-        mMahasiswaList = mahasiswaList;
+    public void setData(List<Tugas> tugasList) {
+        mTugasList = tugasList;
         notifyDataSetChanged();
     }
 
-    public List<Mahasiswa> getTasks() {
-
-        return mMahasiswaList;
+    public List<Tugas> getData() {
+        return mTugasList;
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView mNama, mNim, mJenisKelamin;
+        TextView mNama, mDeskripsi, mStatus;
         FancyButton mEdit, mDelete;
         AppDatabase mDb;
         CardView mCard;
@@ -86,8 +86,8 @@ public class MahasiswaAdapter extends RecyclerView.Adapter<MahasiswaAdapter.MyVi
             mDb = AppDatabase.getInstance(context);
 //            name = itemView.findViewById(R.id.person_name);
             mNama = itemView.findViewById(R.id.item_nama);
-            mNim = itemView.findViewById(R.id.item_nim);
-            mJenisKelamin = itemView.findViewById(R.id.item_jeniskelamin);
+            mDeskripsi = itemView.findViewById(R.id.item_deskripsi);
+            mStatus = itemView.findViewById(R.id.item_status);
             mEdit = itemView.findViewById(R.id.item_btn_edit);
             mDelete = itemView.findViewById(R.id.item_btn_hapus);
 
@@ -96,9 +96,16 @@ public class MahasiswaAdapter extends RecyclerView.Adapter<MahasiswaAdapter.MyVi
             mCard.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int mahasiswaId = mMahasiswaList.get(getAdapterPosition()).getId();
+                    int id = mTugasList.get(getAdapterPosition()).getId();
+                    String nama = mTugasList.get(getAdapterPosition()).getNama();
+                    String deskripsi = mTugasList.get(getAdapterPosition()).getDeskripsi();
+                    int status = mTugasList.get(getAdapterPosition()).getStatus();
                     Intent i = new Intent(context, EditActivity.class);
-                    i.putExtra("detail", mahasiswaId);
+                    i.putExtra("detail", "detail");
+                    i.putExtra("id", id);
+                    i.putExtra("nama", nama);
+                    i.putExtra("deskripsi", deskripsi);
+                    i.putExtra("status", status);
                     context.startActivity(i);
                 }
             });
@@ -107,9 +114,16 @@ public class MahasiswaAdapter extends RecyclerView.Adapter<MahasiswaAdapter.MyVi
             mEdit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int mahasiswaId = mMahasiswaList.get(getAdapterPosition()).getId();
+                    int id = mTugasList.get(getAdapterPosition()).getId();
+                    String nama = mTugasList.get(getAdapterPosition()).getNama();
+                    String deskripsi = mTugasList.get(getAdapterPosition()).getDeskripsi();
+                    int status = mTugasList.get(getAdapterPosition()).getStatus();
                     Intent i = new Intent(context, EditActivity.class);
-                    i.putExtra("update", mahasiswaId);
+                    i.putExtra("update", "update");
+                    i.putExtra("id", id);
+                    i.putExtra("nama", nama);
+                    i.putExtra("deskripsi", deskripsi);
+                    i.putExtra("status", status);
                     context.startActivity(i);
                 }
             });
@@ -119,19 +133,14 @@ public class MahasiswaAdapter extends RecyclerView.Adapter<MahasiswaAdapter.MyVi
                 public void onClick(View view) {
                     final SweetAlertDialog sDialog = new SweetAlertDialog(context,SweetAlertDialog.WARNING_TYPE);
                     sDialog.setTitle("Hapus Data");
-                    sDialog.setContentText("Ingin menghapus data nim "+mMahasiswaList.get(getAdapterPosition()).getNim()+" ?");
+                    sDialog.setContentText("Ingin menghapus tugas "+mTugasList.get(getAdapterPosition()).getNama()+" ?");
                     sDialog.setConfirmButton("Ya", new SweetAlertDialog.OnSweetClickListener() {
                         @Override
                         public void onClick(SweetAlertDialog sweetAlertDialog) {
-                            final Mahasiswa mahasiswa = mMahasiswaList.get(getAdapterPosition());
 
-                            AppExecutors.getInstance().diskIO().execute(new Runnable() {
-                                @Override
-                                public void run() {
-                                    mDb.mahasiswaDao().delete(mahasiswa);
-                                }
-                            });
-                            ((MainActivity) context).retrieveMahasiswa();
+                            databaseHelper.delete(mTugasList.get(getAdapterPosition()).getId());
+
+                            ((MainActivity) context).retrieveTugas();
                             sDialog.dismissWithAnimation();
                         }
                     });

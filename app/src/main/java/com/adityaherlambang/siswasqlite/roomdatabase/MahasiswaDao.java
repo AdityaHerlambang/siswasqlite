@@ -1,4 +1,4 @@
-package com.adityaherlambang.siswasqlite.database;
+package com.adityaherlambang.siswasqlite.roomdatabase;
 
 import androidx.room.Dao;
 import androidx.room.Delete;

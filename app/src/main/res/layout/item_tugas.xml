@@ -38,22 +38,18 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
+                    android:orientation="horizontal"
                     android:layout_marginLeft="12dp"
                     android:layout_marginRight="8dp"
+                    android:weightSum="10"
                     android:layout_marginTop="8dp">
 
                     <LinearLayout
                         android:layout_marginTop="8dp"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="7"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/item_startup_founder_image"
-                            android:src="@drawable/ic_account_circle_black_24dp"
-                            android:layout_width="40dp"
-                            android:layout_gravity="center"
-                            android:layout_height="40dp"/>
                         <LinearLayout
                             android:layout_marginLeft="8dp"
                             android:layout_width="match_parent"
@@ -65,65 +61,66 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="4dp"
-                                android:text="Aditya Herlambang"
+                                android:text="Membuat SQLite"
                                 android:textColor="@color/colorPrimaryText"
                                 android:textSize="18sp" />
                             <TextView
-                                android:id="@+id/item_nim"
+                                android:id="@+id/item_deskripsi"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="4dp"
-                                android:textSize="16sp"
+                                android:textSize="14sp"
                                 android:textColor="@color/colorSecondaryText"
-                                android:textStyle="bold"
-                                tools:text="1705551008"/>
+                                android:textStyle="normal"
+                                tools:text="Tugas matkul progmob membuat SQLite menggunakan java"/>
                             <TextView
-                                android:id="@+id/item_jeniskelamin"
+                                android:id="@+id/item_status"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="4dp"
-                                android:textSize="16sp"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
                                 android:textColor="@color/colorSecondaryText"
-                                tools:text="Perempuan"/>
+                                tools:text="Sulit"/>
                         </LinearLayout>
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="44dp"
-                        android:layout_marginTop="8dp"
-                        android:gravity="end"
-                        android:orientation="horizontal">
+                        android:layout_width="0dp"
+                        android:layout_weight="3"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
                         <mehdi.sakout.fancybuttons.FancyButton
                             android:id="@+id/item_btn_hapus"
                             style="@style/Widget.AppCompat.Button.Borderless"
                             android:layout_width="wrap_content"
-                            android:layout_height="35dp"
+                            android:layout_height="30dp"
                             android:layout_gravity="end"
-                            android:layout_marginTop="16dp"
-                            android:layout_marginRight="8dp"
+                            android:layout_marginTop="8dp"
                             android:textSize="12sp"
                             fancy:fb_defaultColor="@color/md_red_900"
                             fancy:fb_fontIconResource="\uf1f8"
                             fancy:fb_iconPosition="left"
+                            fancy:fb_fontIconSize="9sp"
                             fancy:fb_radius="30dp"
-                            fancy:fb_text="Hapus"
+                            fancy:fb_text=""
                             fancy:fb_textColor="#FFFFFF" />
 
                         <mehdi.sakout.fancybuttons.FancyButton
                             android:id="@+id/item_btn_edit"
                             style="@style/Widget.AppCompat.Button.Borderless"
                             android:layout_width="wrap_content"
-                            android:layout_height="35dp"
+                            android:layout_height="30dp"
                             android:layout_gravity="end"
-                            android:layout_marginTop="16dp"
+                            android:layout_marginTop="8dp"
                             android:textSize="12sp"
                             fancy:fb_defaultColor="@color/colorAccent"
                             fancy:fb_fontIconResource="\uf044"
                             fancy:fb_iconPosition="left"
+                            fancy:fb_fontIconSize="9sp"
                             fancy:fb_radius="30dp"
-                            fancy:fb_text="Edit"
+                            fancy:fb_text=""
                             fancy:fb_textColor="#FFFFFF" />
                     </LinearLayout>
 

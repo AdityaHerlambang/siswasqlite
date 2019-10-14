@@ -10,19 +10,25 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.adityaherlambang.siswasqlite.adapter.MahasiswaAdapter;
-import com.adityaherlambang.siswasqlite.database.AppDatabase;
-import com.adityaherlambang.siswasqlite.database.AppExecutors;
+import com.adityaherlambang.siswasqlite.adapter.TugasAdapter;
+import com.adityaherlambang.siswasqlite.helper.DatabaseHelper;
+import com.adityaherlambang.siswasqlite.model.Tugas;
+import com.adityaherlambang.siswasqlite.roomdatabase.AppDatabase;
+import com.adityaherlambang.siswasqlite.roomdatabase.AppExecutors;
 import com.adityaherlambang.siswasqlite.model.Mahasiswa;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     FloatingActionButton floatingActionButton;
     RecyclerView mRecyclerView;
-    MahasiswaAdapter mAdapter;
+    TugasAdapter mAdapter;
     AppDatabase mDb;
+    List<Tugas> itemList = new ArrayList<Tugas>();
+    DatabaseHelper databaseHelper = new DatabaseHelper(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        mAdapter = new MahasiswaAdapter(this);
+        mAdapter = new TugasAdapter(this);
         mRecyclerView.setAdapter(mAdapter);
         mDb = AppDatabase.getInstance(getApplicationContext());
 
@@ -54,30 +60,37 @@ public class MainActivity extends AppCompatActivity {
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         ActionBar ab = getSupportActionBar();
-        ab.setTitle("List Mahasiswa");
+        ab.setTitle("List Tugas");
 //        ab.setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        retrieveMahasiswa();
+        retrieveTugas();
     }
 
-    public void retrieveMahasiswa() {
-        AppExecutors.getInstance().diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                final List<Mahasiswa> mahasiswas = mDb.mahasiswaDao().loadAllMahasiswas();
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        mAdapter.setTasks(mahasiswas);
-                    }
-                });
-            }
-        });
+    public void retrieveTugas() {
+        itemList.clear();
+        mAdapter.notifyDataSetChanged();
+        ArrayList<HashMap<String, String>> row = databaseHelper.getAllData();
 
+        for (int i = 0; i < row.size(); i++) {
+            int id = Integer.parseInt(row.get(i).get("id"));
+            String nama = row.get(i).get("nama_tugas");
+            String deskripsi = row.get(i).get("deskripsi");
+            int status = Integer.parseInt(row.get(i).get("status"));
 
+            Tugas tugas = new Tugas();
+
+            tugas.setId(id);
+            tugas.setNama(nama);
+            tugas.setDeskripsi(deskripsi);
+            tugas.setStatus(status);
+
+            itemList.add(tugas);
+        }
+
+        mAdapter.setData(itemList);
     }
 }

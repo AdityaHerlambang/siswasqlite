@@ -55,7 +55,7 @@
                                 android:padding="8dp"
                                 android:textSize="@dimen/card_textSize_form"
                                 android:layout_height="wrap_content"
-                                android:text="Detail Mahasiswa"/>
+                                android:text="Detail Tugas"/>
 
                         </LinearLayout>
 
@@ -76,7 +76,7 @@
                                     android:layout_height="@dimen/form_content_height"
                                     android:layout_marginTop="@dimen/form_content_marginTop"
                                     android:ems="10"
-                                    android:hint="Nama"
+                                    android:hint="Nama Tugas"
                                     android:inputType="text"
                                     android:textColor="@color/colorPrimaryText"
                                     android:textColorHint="@color/colorSecondaryText"
@@ -90,13 +90,14 @@
                                 android:layout_marginRight="@dimen/form_textInputLayout_marginRight">
 
                                 <EditText
-                                    android:id="@+id/nim"
+                                    android:id="@+id/deskripsi"
                                     android:layout_width="match_parent"
                                     android:layout_height="@dimen/form_content_height"
                                     android:layout_marginTop="@dimen/form_content_marginTop"
                                     android:ems="10"
-                                    android:hint="NIM"
-                                    android:inputType="number"
+                                    android:minLines="3"
+                                    android:hint="Deskripsi"
+                                    android:inputType="textMultiLine"
                                     android:textColor="@color/colorPrimaryText"
                                     android:textColorHint="@color/colorSecondaryText"
                                     android:textSize="@dimen/card_textSize_form" />
@@ -107,7 +108,7 @@
                                 android:layout_marginTop="8dp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Jenis Kelamin"/>
+                                android:text="Status tingkat kesulitan"/>
 
                             <RadioGroup
                                 android:layout_width="match_parent"
@@ -116,18 +117,18 @@
                                 android:layout_marginBottom="8dp">
 
                                 <RadioButton
-                                    android:id="@+id/laki"
+                                    android:id="@+id/sulit"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Laki-Laki" />
+                                    android:text="Sulit" />
 
                                 <RadioButton
-                                    android:id="@+id/perempuan"
+                                    android:id="@+id/mudah"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="Perempuan" />
+                                    android:text="Mudah" />
                             </RadioGroup>
 
                             <Button
